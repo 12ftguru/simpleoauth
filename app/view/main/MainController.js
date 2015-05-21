@@ -54,13 +54,14 @@ Ext.define('SimpleOAuth.view.main.MainController', {
     console.log('Data: ', vm.data);
   },
   authorize: function() {
+    var me=this;
     me.saveSession();
     Ext.MessageBox.confirm(
       'Authorize',
       "Clicking Yes will redirect this browser to authorize the app. If all goes well, you'll come back here.",
       function(okBtn) {
         if (okBtn === 'yes' || okBtn === 'ok') {
-          this.doAuthorize();
+          me.doAuthorize();
         }
       },
       this
