@@ -42,7 +42,7 @@ Ext.define('SimpleOAuth.view.main.MainController', {
             );
         data = {
           name: vm.get('oauth2.client_name'),
-          hashedSecret: vm.get('oauth2.hashedSecret'),
+          hashedSecret: vm.get('hashedSecret'),
           user_id: vm.get('oauth2.client_user_id')
         };
         view.down('panel[itemId=serverResponse]').update(clientTpl.apply(data));
