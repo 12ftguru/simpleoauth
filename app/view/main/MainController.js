@@ -168,7 +168,7 @@ Ext.define('SimpleOAuth.view.main.MainController', {
     store.sync();
   },
   instantiateVM: function() {
-    var me=this, vm=me.getViewModel(), store = vm.getStore('session'), data, record;
+    var me=this, view = me.getView(), vm=me.getViewModel(), store = vm.getStore('session'), data, record;
     if (store.count() == 0) {
       console.log('adding basic record');
       store.add({});
@@ -179,6 +179,7 @@ Ext.define('SimpleOAuth.view.main.MainController', {
     if (!Ext.isEmpty(data.code)) {
       record.set('authCode', data.code);
       // update console
+      view.down('panel[itemId=serverResponse]').update("The app returned an authorization code of: </br><pre>"+data.code+"</pre>");
       store.sync();
     }
     vm.set('oauth2', record);
