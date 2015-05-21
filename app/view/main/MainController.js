@@ -34,7 +34,11 @@ Ext.define('SimpleOAuth.view.main.MainController', {
           "<p>There is no api for adding client records, so you have to do this by hand. Using your mongo client, first be sure you're connected to the correct db:</p>",
           "<code><pre>use buildi_dev_auth;</pre></code>",
           "<p>Then issue this command:</p>",
-          "<code><pre>db.oauth_client.insert({name: '{name}', secret: '{hashedSecret}', user_id: '{user_id}'});</pre></code>",
+          "<code><pre>db.oauth_client.insert({\r",
+          "  name: '{name}', \r",
+          "  secret: '{hashedSecret}', \r",
+          "  user_id: '{user_id}'\r",
+          "});</pre></code>",
           "<p>Then query your new client document:</p>",
           "<code><pre>db.oauth_client.find({secret: '{hashedSecret}'});</pre></code>",
           "<p>The value of the _id field should be entered into 'Client ID' below.</p>",
@@ -99,8 +103,11 @@ Ext.define('SimpleOAuth.view.main.MainController', {
       params: data,
       withCredentials: true,
       callback: function(opt, success, response) {
-        var resp = Ext.JSON.decode(response.responseText);
-        view.down('panel[itemId=serverResponse]').update("<pre>"+response.responseText+"</pre>");
+        var resp = Ext.JSON.decode(response.responseText), str = response.responseText;
+        str = str.replace(/{/g, '\r{\r  ');
+        str = str.replace(/}/g, '\r}');
+        str = str.replace(/,/g, ',\r  ');
+        view.down('panel[itemId=serverResponse]').update("<pre>"+str+"</pre>");
         if (success) {
           vm.set('oauth2.token', resp.access_token.value);
           me.saveSession();
@@ -122,8 +129,12 @@ Ext.define('SimpleOAuth.view.main.MainController', {
       url: vm.get('oauth2.url_api'),
       withCredentials: false,
       callback: function(opt, success, response) {
+        var str = response.responseText;
+        str = str.replace(/{/g, '\r{\r  ');
+        str = str.replace(/}/g, '\r}');
+        str = str.replace(/,/g, ',\r  ');
         data += '<pre>';
-        data += response.responseText;
+        data += str;
         data += '</pre><br /><br />';
         data += "<b>With oauth token:</b><br />\n";
         Ext.Ajax.request({
@@ -134,8 +145,12 @@ Ext.define('SimpleOAuth.view.main.MainController', {
             Authorization: auth
           },
           callback: function(opt, success, response) {
+            var str = response.responseText;
+            str = str.replace(/{/g, '\r{\r  ');
+            str = str.replace(/}/g, '\r}');
+            str = str.replace(/,/g, ',\r  ');
             data += '<pre>';
-            data += response.responseText;
+            data += str;
             data += "</pre>\n";
             view.down('panel[itemId=serverResponse]').update(data);
           }
@@ -163,6 +178,7 @@ Ext.define('SimpleOAuth.view.main.MainController', {
     data = Ext.Object.fromQueryString(window.location.search);
     if (!Ext.isEmpty(data.code)) {
       record.set('authCode', data.code);
+      // update console
       store.sync();
     }
     vm.set('oauth2', record);
