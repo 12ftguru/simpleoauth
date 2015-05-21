@@ -1,5 +1,15 @@
 # SimpleOAuth
+## Usage
+First, you must have a client id and secret. If you already have a client document in the database, you can use that id/secret. (Note, the database stores a hashed secret, not the actual secret.
 
+If you do not have a client in the database, fill out the "Create Client" section and click the "Create Client" button. This will **not** create the client in the database. There is currently no api method for creating a client. Instead, it will give you commands to cut and paste into a mongo client.
+
+Once you have a client id, proceed through the subsequent sections to simulate an authorization_code oauth2 process.
+
+Most of the fields should autofill before you need them. Just click the buttons and check the results in the panel to the right.
+
+
+## Sencha Boilerplate
 This folder is primarily a container for the top-level pieces of the application.
 While you can remove some files and folders that this application does not use,
 be sure to read below before deciding what can be deleted and what needs to be
@@ -42,7 +52,7 @@ This folder contains static resources (typically an `"images"` folder as well).
 
 ## SimpleOAuth/overrides
 
-This folder contains override classes. All overrides in this folder will be 
+This folder contains override classes. All overrides in this folder will be
 automatically included in application builds if the target class of the override
 is loaded.
 

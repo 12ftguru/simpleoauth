@@ -152,7 +152,7 @@ Ext.define('SimpleOAuth.view.main.Main', {
                                     xtype: 'textfield',
                                     anchor: '100%',
                                     fieldLabel: 'Client ID',
-                                    name: 'client_id',
+                                    name: 'client_id_2',
                                   bind: {
                                       value: '{oauth2.client_id}'
                                   }
