@@ -33,7 +33,7 @@ config.codekit
 
 # Build and Release Folders
 archive/
-build/
+#build/
 
 ###################
 # Compiled source #
